@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guess The Number</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header id="header" class="header">
+      <div class="stats-container">
+        <div class="header-stats">
+          Best Guess: <span id="best-guess">0</span>
+        </div>
+        <div class="question-div"><i class="fa-solid fa-question"></i></div>
+        <div class="dark-toggle toggle-container">
+          <i class="fa-solid fa-toggle-on toggle"></i>
+          <span>Dark mode</span>
+        </div>
+        <div class="light-toggle toggle-container hidden">
+          <i class="fa-solid fa-toggle-off toggle"></i>
+          <span>Light mode</span>
+        </div>
+      </div>
+      <div class="stats-container">
+        <div class="header-stats">
+          Tries Left: <span id="tries-left">10</span>
+        </div>
+      </div>
+    </header>
+    <section id="game-body">
+      <div id="game-main">
+        <div id="guessed-num">000</div>
+        <div class="btn-container">
+          <button class="game-btn go-btn">GO!</button>
+          <button class="game-btn try-again-btn hidden">Try Again</button>
+          <button class="game-btn new-game-btn hidden">New Game</button>
+          <button class="game-btn best-score-reset-btn">
+            Reset Best Score
+          </button>
+        </div>
+        <div id="results" class="result-div"></div>
+      </div>
+    </section>
+    <div id="about-game" class="hidden">
+      <h1>HOW THE GAME WORKS</h1>
+      <ul>
+        <li>
+          As soon as the game starts, the computer picks a random number between
+          1 and 100.
+        </li>
+        <li>You have 10 attempts to guess the number correctly to win.</li>
+        <li>
+          If your guess is within 10 of the correct number, the game will let
+          you know.
+        </li>
+        <li>As simple as that. Thank you and good luck!</li>
+      </ul>
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+    <footer>
+      <div class="footer-text">Designed and developed by Hpone Tauk Nyi.</div>
+      <div class="shortcuts-container">
+        <div class="shortcut"><span>Ctrl + Alt + T</span> Switch theme</div>
+        <div class="shortcut">
+          <span>Ctrl + Shift + S</span>Start a new game
+        </div>
+      </div>
+      <div class="footer-text mail">Contact: hponetaukyou@gmail.com</div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
