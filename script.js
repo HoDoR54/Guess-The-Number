@@ -86,6 +86,7 @@ const leftTriesDisplay = document.getElementById("tries-left");
 let triesLeft = 10;
 const numDisplay = document.getElementById("guessed-num");
 const bestGuessDisplay = document.getElementById("best-guess");
+const scoreDisplay = document.getElementById("player-score");
 
 // user input validation
 document.body.addEventListener("keydown", (event) => {
@@ -169,6 +170,7 @@ bestGuessDisplay.textContent =
 function checkResult(guessed, random) {
   if (guessed === random) {
     playerScore = 10 - triesLeft;
+    scoreDisplay.textContent = playerScore;
     if (playerScore < bestGuess) {
       bestGuess = playerScore;
       localStorage.setItem("bestGuess", JSON.stringify(bestGuess));
