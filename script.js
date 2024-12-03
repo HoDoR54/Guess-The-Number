@@ -1,3 +1,27 @@
+let maxValue;
+let minValue;
+let triesAllowed;
+let closeRange;
+
+window.addEventListener("load", () => {
+  maxValue = parseInt(localStorage.getItem("maxValue")) || 100;
+  minValue = parseInt(localStorage.getItem("minValue")) || 1;
+  triesAllowed = parseInt(localStorage.getItem("triesAllowed")) || 10;
+  closeRange = parseInt(localStorage.getItem("closeRange")) || 10;
+
+  triesLeft = triesAllowed;
+  leftTriesDisplay.textContent = triesLeft;
+
+  const savedDifficulty = localStorage.getItem("selectedDifficulty") || "easy"; // Default to "easy"
+  const savedRadio = document.querySelector(
+    `input[name="difficulty"][value="${savedDifficulty}"]`
+  );
+
+  if (savedRadio) {
+    savedRadio.checked = true;
+    savedRadio.dispatchEvent(new Event("change"));
+  }
+});
 /*---------------------------Shortcuts-----------------------*/
 
 // switches between themes
@@ -42,32 +66,102 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
+/*-----------------settings------------------*/
+const settingsIcon = document.getElementsByClassName("settings-div")[0];
+const settings = document.getElementsByClassName("settings")[0];
 
-/* -------------------Header-Start---------------------- */
-const darkModeToggle = document.getElementsByClassName("fa-toggle-on")[0];
-const lightModeToggle = document.getElementsByClassName("fa-toggle-off")[0];
-const darkContainer = document.getElementsByClassName("dark-toggle")[0];
-const lightContainer = document.getElementsByClassName("light-toggle")[0];
-const aboutGame = document.getElementById("about-game");
-
-darkModeToggle.addEventListener("click", () => {
-  lightContainer.classList.remove("hidden");
-  darkContainer.classList.add("hidden");
-  document.documentElement.setAttribute("data-theme", "light");
+settingsIcon.addEventListener("click", () => {
+  settings.classList.remove("hidden");
+  if (aboutGame) {
+    aboutGame.classList.add("hidden");
+  }
 });
 
-lightModeToggle.addEventListener("click", () => {
-  darkContainer.classList.remove("hidden");
-  lightContainer.classList.add("hidden");
+const settingsClose = document.getElementsByClassName("settings-close")[0];
+
+settingsClose.addEventListener("click", () => {
+  settings.classList.add("hidden");
+});
+
+const difficultyRadios = document.querySelectorAll('input[name="difficulty"]');
+const customMenu = document.getElementsByClassName("custom")[0];
+
+difficultyRadios.forEach((radio) => {
+  radio.addEventListener("change", () => {
+    localStorage.setItem("selectedDifficulty", radio.value);
+
+    switch (radio.value) {
+      case "hard":
+        maxValue = 999;
+        minValue = 1;
+        triesAllowed = 10;
+        triesLeft = triesAllowed;
+        leftTriesDisplay.textContent = triesLeft;
+        closeRange = 10;
+        break;
+      case "medium":
+        maxValue = 500;
+        minValue = 1;
+        triesAllowed = 10;
+        triesLeft = triesAllowed;
+        leftTriesDisplay.textContent = triesLeft;
+        closeRange = 10;
+        break;
+      case "easy":
+        maxValue = 100;
+        minValue = 1;
+        triesAllowed = 10;
+        triesLeft = triesAllowed;
+        leftTriesDisplay.textContent = triesLeft;
+        closeRange = 10;
+        break;
+      case "custom":
+        customMenu.classList.remove("custom");
+        customMenu.classList.add("active-custom");
+        break;
+    }
+
+    localStorage.setItem("maxValue", maxValue);
+    localStorage.setItem("minValue", minValue);
+    localStorage.setItem("triesAllowed", triesAllowed);
+    localStorage.setItem("closeRange", closeRange);
+  });
+});
+
+const saveChangesBtn = document.getElementsByClassName("save-changes")[0];
+
+saveChangesBtn.addEventListener("click", () => {
+  const maxInput = document.getElementById("maximum-value");
+  maxValue = parseInt(maxInput.value);
+  const minInput = document.getElementById("minimum-value");
+  minValue = parseInt(minInput.value);
+  const triesInput = document.getElementById("tries-allowed");
+  triesAllowed = parseInt(triesInput.value);
+  const rangeInput = document.getElementById("close-range");
+  closeRange = parseInt(rangeInput.value);
+
+  triesLeft = triesAllowed;
+  leftTriesDisplay.textContent = triesLeft;
+});
+/* -------------------theme---------------------- */
+const darkModeRadio = document.getElementById("dark-mode-radio");
+const lightModeRadio = document.getElementById("light-mode-radio");
+
+darkModeRadio.addEventListener("click", () => {
   document.documentElement.setAttribute("data-theme", "dark");
 });
 
+lightModeRadio.addEventListener("click", () => {
+  document.documentElement.setAttribute("data-theme", "light");
+});
+
+/*----------------------------about game------------*/
+const aboutGame = document.getElementById("about-game");
 const questionMark = document.getElementsByClassName("question-div")[0];
 questionMark.addEventListener("click", () => {
-  if (aboutGame.classList.contains("hidden")) {
-    aboutGame.classList.remove("hidden");
-  } else {
-    aboutGame.classList.add("hidden");
+  aboutGame.classList.remove("hidden");
+  if (settings) {
+    settings.classList.add("hidden");
   }
 });
 
@@ -75,21 +169,19 @@ const popUpClose = document.getElementsByClassName("fa-xmark")[0];
 popUpClose.addEventListener("click", () => {
   aboutGame.classList.add("hidden");
 });
-/*---------------------------Header-End------------------*/
 
-/* ----------------------Body-Start------------------- */
-let bestGuess = JSON.parse(localStorage.getItem("bestGuess")) || 11;
-
-const resultDisplay = document.getElementById("results");
-let guessedNumber = 0;
-const leftTriesDisplay = document.getElementById("tries-left");
-let triesLeft = 10;
-const numDisplay = document.getElementById("guessed-num");
-const bestGuessDisplay = document.getElementById("best-guess");
-const scoreDisplay = document.getElementById("player-score");
+/* ----------------------Body------------------- */
 
 // user input validation
+const numDisplay = document.getElementById("guessed-num");
+
 document.body.addEventListener("keydown", (event) => {
+  const activeElement = document.activeElement;
+
+  if (activeElement.tagName === "INPUT") {
+    return;
+  }
+
   if (event.key >= "0" && event.key <= "9") {
     let currentDisplay = numDisplay.textContent.trim();
 
@@ -97,7 +189,7 @@ document.body.addEventListener("keydown", (event) => {
     numDisplay.textContent = currentDisplay;
 
     const currentNumber = Number(currentDisplay);
-    if (!isNaN(currentNumber) && currentNumber > 100) {
+    if (!isNaN(currentNumber) && currentNumber > maxValue) {
       resultDisplay.textContent = pickRandomMessage(numberRangeArray);
       setTimeout(() => {
         resultDisplay.textContent = "";
@@ -114,9 +206,20 @@ document.body.addEventListener("keydown", (event) => {
   }
 });
 
+/*-----------------------------GAME-------------------*/
+let bestGuess = JSON.parse(localStorage.getItem("bestGuess")) || Infinity;
+
+const resultDisplay = document.getElementById("results");
+let guessedNumber = 0;
+const leftTriesDisplay = document.getElementById("tries-left");
+let triesLeft = triesAllowed;
+const bestGuessDisplay = document.getElementById("best-guess");
+const scoreDisplay = document.getElementById("player-score");
+
 // make computer pick a random number
-function pickRandom() {
-  const randomNum = Math.floor(Math.random() * 100) + 1;
+function pickRandom(minValue, maxValue) {
+  const randomNum =
+    Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
   return randomNum;
 }
 
@@ -127,7 +230,8 @@ const newGameBtn = document.getElementsByClassName("new-game-btn")[0];
 let random;
 // the function of 'go' btn
 function startGame() {
-  const randomNum = pickRandom();
+  const randomNum = pickRandom(minValue, maxValue);
+  console.log(randomNum);
   checkResult(guessedNumber, randomNum);
   triesLeft--;
   goBtn.classList.add("hidden");
@@ -169,7 +273,7 @@ bestGuessDisplay.textContent =
 // check results
 function checkResult(guessed, random) {
   if (guessed === random) {
-    playerScore = 10 - triesLeft;
+    playerScore = triesAllowed - triesLeft;
     scoreDisplay.textContent = playerScore;
     if (playerScore < bestGuess) {
       bestGuess = playerScore;
@@ -182,7 +286,7 @@ function checkResult(guessed, random) {
       retryBtn.classList.add("hidden");
     }
     triesLeft = 10;
-  } else if (Math.abs(guessed - random) <= 10) {
+  } else if (Math.abs(guessed - random) <= closeRange) {
     resultDisplay.textContent = pickRandomMessage(closeArray);
   } else {
     resultDisplay.textContent = pickRandomMessage(notCloseArray);
@@ -215,10 +319,11 @@ retryBtn.addEventListener("click", () => {
   }
 });
 
+//start a new game
 newGameBtn.addEventListener("click", () => {
   numDisplay.textContent = "000";
   guessedNumber = 0;
-  triesLeft = 10;
+  triesLeft = triesAllowed;
   leftTriesDisplay.textContent = triesLeft;
   resultDisplay.textContent = "";
   if (newGameBtn) {
@@ -230,6 +335,7 @@ newGameBtn.addEventListener("click", () => {
   }
 });
 
+//reset
 const resetBtn = document.getElementsByClassName("best-score-reset-btn")[0];
 resetBtn.addEventListener("click", () => {
   bestGuess = Infinity;
@@ -264,11 +370,11 @@ const notCloseArray = [
 ];
 
 const numberRangeArray = [
-  "Tch, I told you to pick a number between 1 and 100! Are you really that stupid?",
-  "Ugh, why do you always mess up the range? Stick to 1-100!",
-  "You had one job: pick a number between 1 and 100. How hard is it?",
-  "Idiot, that's not in the range! I said 1 to 100, didn't I?",
-  "Are you even paying attention? Pick a number between 1 and 100!",
+  `Tch, I told you to pick a number within the range! Are you really that stupid?`,
+  `Ugh, why do you always mess up the range? Idiot!`,
+  `You had one job: pick a number between minimum and maximum values. How hard is it?`,
+  `Idiot, that's not in the range! I told you, didn't I?`,
+  `Are you even paying attention? Pick a number within the range!`,
 ];
 
 const outOfAttemptsArray = [

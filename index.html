@@ -20,13 +20,8 @@
           Best Guess: <span id="best-guess">0</span>
         </div>
         <div class="question-div"><i class="fa-solid fa-question"></i></div>
-        <div class="dark-toggle toggle-container">
-          <i class="fa-solid fa-toggle-on toggle"></i>
-          <span>Dark mode</span>
-        </div>
-        <div class="light-toggle toggle-container hidden">
-          <i class="fa-solid fa-toggle-off toggle"></i>
-          <span>Light mode</span>
+        <div class="settings-div">
+          <i class="fa-solid fa-gear"></i>
         </div>
       </div>
       <div class="stats-container">
@@ -54,20 +49,71 @@
     </section>
     <div id="about-game" class="hidden">
       <h1>HOW THE GAME WORKS</h1>
-      <ul>
-        <li>
-          As soon as the game starts, the computer picks a random number between
-          1 and 100.
-        </li>
-        <li>You have 10 attempts to guess the number correctly to win.</li>
-        <li>
-          If your guess is within 10 of the correct number, the game will let
-          you know.
-        </li>
-        <li>As simple as that. Thank you and good luck!</li>
+      <ul> 
+        <li>The computer selects a random number between 1 and 100.</li> 
+        <li>You have 10 attempts to guess it.</li> 
+        <li>If your guess is within 10 of the correct number, you'll be notified.</li> 
+        <li>Default settings are 10 attempts and a 10-number range, but difficulty can be customized.</li> 
+        <li>Good luck!</li> 
       </ul>
       <i class="fa-solid fa-xmark"></i>
     </div>
+    <section class="settings hidden">
+      <h1>Settings</h1>
+      <div class="settings-child">
+        <h2>Difficulty</h2>
+        <label class="difficulty-container">
+          <label>
+            <input type="radio" name="difficulty" value="hard" />Hard (1-999)
+          </label>
+          <label>
+            <input type="radio" name="difficulty" value="medium" />Medium (1-500)
+          </label>
+          <label>
+            <input type="radio" name="difficulty" value="easy" />Easy
+            (1-100) <span class="default-span">--default</span>
+          </label>
+          <label>
+            <input type="radio" name="difficulty" value="custom" />Custom
+          </label>
+        </div>
+        <div class="custom">
+          <div class="customStats-container">
+            <span>Minimum:</span>
+            <input type="number" placeholder="00" id="minimum-value"/>
+          </div>
+          <div class="customStats-container">
+            <span>Maximum: </span>
+            <input type="number" placeholder="00" id="maximum-value"/>
+          </div>
+          <div class="customStats-container">
+            <span>Tries Allowed:</span>
+            <input type="number" placeholder="00" id="tries-allowed"/>
+          </div>
+          <div class="customStats-container">
+            <span>Close Range:</span>
+            <input type="number" placeholder="00" id="close-range"/>
+          </div>
+          <div class="saveChanges-container">
+            <button class="save-changes">Save Changes</button>
+          </div>
+        </div>
+      </div>
+      <div class="settings-child">
+        <h2>Theme</h2>
+        <div class="theme-container">
+          <div>
+            <input type="radio" name="theme" id="dark-mode-radio" checked />
+            <span>Dark Mode</span>
+          </div>
+          <div>
+            <input type="radio" name="theme" id="light-mode-radio" />
+            <span>Light Mode</span>
+          </div>
+          <i class="fa-solid fa-xmark settings-close"></i>
+        </div>
+      </div>
+    </section>
     <footer>
       <div class="footer-text">Designed and developed by Hpone Tauk Nyi.</div>
       <div class="shortcuts-container">
