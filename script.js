@@ -215,6 +215,7 @@ const leftTriesDisplay = document.getElementById("tries-left");
 let triesLeft = triesAllowed;
 const bestGuessDisplay = document.getElementById("best-guess");
 const scoreDisplay = document.getElementById("player-score");
+const previousGuessDisplay = document.getElementById("js-previous-guess");
 
 // make computer pick a random number
 function pickRandom(minValue, maxValue) {
@@ -231,11 +232,12 @@ let random;
 // the function of 'go' btn
 function startGame() {
   const randomNum = pickRandom(minValue, maxValue);
-  console.log(randomNum);
   checkResult(guessedNumber, randomNum);
   triesLeft--;
   goBtn.classList.add("hidden");
   retryBtn.classList.remove("hidden");
+  newGameBtn.classList.remove("hidden");
+  previousGuessDisplay.textContent = guessedNumber;
   random = randomNum;
   guessedNumber = 0;
   leftTriesDisplay.textContent = triesLeft;
@@ -301,11 +303,10 @@ function reattemptSameNum(guessed, random) {
     triesLeft--;
     checkResult(guessedNum, randomNum);
     leftTriesDisplay.textContent = triesLeft;
+    previousGuessDisplay.textContent = guessedNum;
   } else if (triesLeft <= 0) {
     resultDisplay.textContent =
       pickRandomMessage(outOfAttemptsArray) + ` It was ${random}.`;
-    newGameBtn.classList.remove("hidden");
-    retryBtn.classList.add("hidden");
   }
 }
 
@@ -326,6 +327,7 @@ newGameBtn.addEventListener("click", () => {
   triesLeft = triesAllowed;
   leftTriesDisplay.textContent = triesLeft;
   resultDisplay.textContent = "";
+  previousGuessDisplay.textContent = "00";
   if (newGameBtn) {
     newGameBtn.classList.add("hidden");
   }
@@ -346,51 +348,51 @@ resetBtn.addEventListener("click", () => {
 // ------------------------result-arrays-----------------------
 
 const congratsArray = [
-  "W-what?! I can't believe you got it right... Tch, whatever.",
-  "I-I guess you did well. Don't get used to it!",
-  `I-I wasn't expecting you to guess it right... but I guess you were lucky.`,
-  "D-Don't think you're so great just because you won. Baka!",
-  "F-Fine, you got it. Happy now? But don't think I'm impressed or anything!",
+  "Nice! You got it right. Great job!",
+  "Well done! You nailed it!",
+  "You guessed it! Good work!",
+  "Awesome! You got it spot on!",
+  "You did it! Great guess!",
 ];
 
 const closeArray = [
-  "Tch, you were close... but still wrong! Try harder, idiot.",
-  "Y-You almost had it! Hmph, you're lucky I’m not mad.",
-  "Close enough... I guess I’ll give you another chance. But don’t think I’ll make it easy.",
-  "You're not bad... but you still missed. Try harder next time!",
-  "Ugh, you were so close! But don’t think I’ll go easy on you just because of that.",
+  "Ooh, so close! Try again—you’re almost there!",
+  "Not bad! You were really close that time.",
+  "Close one! Keep it up—you’ll get it soon.",
+  "Good effort! You’re getting warmer.",
+  "Almost there! Just a little more effort!",
 ];
 
 const notCloseArray = [
-  "Hah, that’s way off! Are you even trying?",
-  "No way, you’re nowhere near it! Don’t bother me with guesses like that.",
-  "Tch, you’re way off. Maybe you should just give up.",
-  "I-I can’t believe you guessed so far off. How embarrassing for you.",
-  "I-I don’t want to say it, but you’re so far off... better luck next time!",
+  "That’s way off. Try something closer.",
+  "Nope, not even close. Give it another shot!",
+  "Not quite. Maybe rethink your guess?",
+  "That guess was pretty far off. Keep trying!",
+  "Hmm, you’re way off this time. Better luck next guess!",
 ];
 
 const numberRangeArray = [
-  `Tch, I told you to pick a number within the range! Are you really that stupid?`,
-  `Ugh, why do you always mess up the range? Idiot!`,
-  `You had one job: pick a number between minimum and maximum values. How hard is it?`,
-  `Idiot, that's not in the range! I told you, didn't I?`,
-  `Are you even paying attention? Pick a number within the range!`,
+  "Make sure to pick a number within the range!",
+  "Oops, that’s not in the range. Try again!",
+  "Remember to choose a number between the given limits.",
+  "That number’s out of range. Check the limits!",
+  "Stay within the range next time, okay?",
 ];
 
 const outOfAttemptsArray = [
-  `Out of tries, huh? Pathetic.`,
-  `You used all your attempts? What a waste.`,
-  `Game over. You failed. Don’t even think about retrying.`,
-  `Out of attempts, idiot. I don’t even care anymore.`,
-  `You’ve exhausted all your tries.`,
+  "You’re out of tries! Better luck next time.",
+  "No more attempts left. Game over!",
+  "That’s it for your tries. Give it another go later.",
+  "Out of tries! Thanks for playing!",
+  "All done! You’ve used up all your attempts.",
 ];
 
 const numberPrompt = [
-  "You can't play without entering a number, idiot.",
-  "Enter a number, or you can't play, dummy.",
-  "Don't be an idiot, enter a number if you want to play.",
-  "You want to play? Then enter a number, idiot.",
-  "Enter a number already, or stop pretending you can play!",
+  "Enter a number to play.",
+  "You need to input a number to start.",
+  "Go ahead, type in a number to begin!",
+  "Want to play? Just enter a number.",
+  "Type in a number, and let’s get started!",
 ];
 
 function pickRandomMessage(array) {

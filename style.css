@@ -82,6 +82,11 @@ button {
   font-size: 2rem;
   cursor: pointer;
 }
+.header-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
 
 /* -----------------------game main------------------------ */
 
@@ -284,4 +289,35 @@ footer div {
 }
 [data-theme="light"] .default-span {
   color: var(--secondary-dark);
+}
+.previous-guess {
+  margin: 15px 0;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1020px) {
+  .stats-right {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .shortcut {
+    display: none;
+  }
+  .header {
+    align-items: start;
+  }
+  footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .footer-text {
+    justify-content: center;
+  }
+  .header-left {
+    flex-direction: column;
+  }
+  * {
+    font-size: calc(100% - 2px);
+  }
 }

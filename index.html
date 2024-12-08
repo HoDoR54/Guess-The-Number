@@ -15,16 +15,18 @@
   </head>
   <body>
     <header id="header" class="header">
-      <div class="stats-container">
+      <div class="stats-container header-left">
         <div class="header-stats">
           Best Guess: <span id="best-guess">0</span>
         </div>
-        <div class="question-div"><i class="fa-solid fa-question"></i></div>
-        <div class="settings-div">
-          <i class="fa-solid fa-gear"></i>
+        <div class="header-icons">
+          <div class="question-div"><i class="fa-solid fa-question"></i></div>
+          <div class="settings-div">
+            <i class="fa-solid fa-gear"></i>
+          </div>
         </div>
       </div>
-      <div class="stats-container">
+      <div class="stats-container stats-right">
         <div class="header-stats">
           Previous Score: <span id="player-score">0</span>
         </div>
@@ -36,6 +38,7 @@
     <section id="game-body">
       <div id="game-main">
         <div id="guessed-num">000</div>
+        <div class="previous-guess">Previous Guess: <span id="js-previous-guess">00</span></div>
         <div class="btn-container">
           <button class="game-btn go-btn">GO!</button>
           <button class="game-btn try-again-btn hidden">Try Again</button>
