@@ -370,10 +370,6 @@ if (screenWidth <= 1024) {
       }
       guessedNumber = currentNumber;
     });
-
-    setTimeout(() => {
-      document.body.removeChild(mobileNumInput);
-    }, 200);
   });
 }
 // ------------------------result-arrays-----------------------
