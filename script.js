@@ -354,6 +354,23 @@ if (screenWidth >= 750 && screenWidth <= 1024) {
     mobileNumInput.focus();
     mobileNumInput.classList.add("mobile-num-input");
 
+    mobileNumInput.addEventListener("input", (event) => {
+      let currentDisplay = numDisplay.textContent.trim();
+
+      currentDisplay = currentDisplay.slice(1) + event.data;
+      numDisplay.textContent = currentDisplay;
+
+      const currentNumber = Number(currentDisplay);
+      if (!isNaN(currentNumber) && currentNumber > maxValue) {
+        resultDisplay.textContent = pickRandomMessage(numberRangeArray);
+        setTimeout(() => {
+          resultDisplay.textContent = "";
+        }, 1500);
+        numDisplay.textContent = "000";
+      }
+      guessedNumber = currentNumber;
+    });
+
     setTimeout(() => {
       document.body.removeChild(mobileNumInput);
     }, 200);
