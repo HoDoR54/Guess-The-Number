@@ -346,7 +346,7 @@ resetBtn.addEventListener("click", () => {
 });
 
 const screenWidth = window.innerWidth;
-if (screenWidth >= 750 && screenWidth <= 1024) {
+if (screenWidth >= 300 && screenWidth <= 1024) {
   numDisplay.addEventListener("click", () => {
     const mobileNumInput = document.createElement("input");
     mobileNumInput.type = "text";
