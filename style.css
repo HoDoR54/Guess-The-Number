@@ -314,3 +314,6 @@ footer div {
   pointer-events: none;
   position: absolute;
 }
+.mobile-num-input:active footer {
+  display: none;
+}
