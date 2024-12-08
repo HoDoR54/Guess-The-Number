@@ -347,7 +347,7 @@ resetBtn.addEventListener("click", () => {
 
 const screenWidth = window.innerWidth;
 if (screenWidth >= 750 && screenWidth <= 1024) {
-  numDisplay.addEventListener("touchstart", () => {
+  numDisplay.addEventListener("click", () => {
     const mobileNumInput = document.createElement("input");
     mobileNumInput.type = "text";
     document.body.appendChild(mobileNumInput);
