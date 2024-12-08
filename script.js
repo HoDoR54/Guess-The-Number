@@ -345,21 +345,20 @@ resetBtn.addEventListener("click", () => {
   bestGuessDisplay.textContent = 0;
 });
 
-const mobileInput = () => {
-  const screenWidth = window.innerWidth;
+const screenWidth = window.innerWidth;
+if (screenWidth >= 750 && screenWidth <= 1024) {
+  numDisplay.addEventListener("touchstart", () => {
+    const mobileNumInput = document.createElement("input");
+    mobileNumInput.type = "text";
+    document.body.appendChild(mobileNumInput);
+    mobileNumInput.focus();
+    mobileNumInput.classList.add("mobile-num-input");
 
-  if (screenWidth >= 768 && screenWidth <= 1024) {
-    numDisplay.addEventListener("touchstart", () => {
-      const input = document.createElement("input");
-      input.type = "text";
-      document.body.appendChild(input);
-      input.focus();
-    });
-  } else {
-    return;
-  }
-};
-
+    setTimeout(() => {
+      document.body.removeChild(mobileNumInput);
+    }, 200);
+  });
+}
 // ------------------------result-arrays-----------------------
 
 const congratsArray = [
