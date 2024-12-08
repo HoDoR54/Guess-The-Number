@@ -350,14 +350,20 @@ if (screenWidth <= 1024) {
   numDisplay.addEventListener("click", () => {
     const mobileNumInput = document.createElement("input");
     mobileNumInput.type = "text";
+    mobileNumInput.inputMode = "numeric";
     document.body.appendChild(mobileNumInput);
     mobileNumInput.focus();
     mobileNumInput.classList.add("mobile-num-input");
 
     mobileNumInput.addEventListener("input", (event) => {
       let currentDisplay = numDisplay.textContent.trim();
+      const inputValue = event.data;
 
-      currentDisplay = currentDisplay.slice(1) + event.data;
+      if (inputValue && !/^\d$/.test(inputValue)) {
+        mobileNumInput.value = currentDisplay;
+        return;
+      }
+      currentDisplay = currentDisplay.slice(1) + (inputValue || "");
       numDisplay.textContent = currentDisplay;
 
       const currentNumber = Number(currentDisplay);
