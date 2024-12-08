@@ -368,8 +368,6 @@ if (screenWidth <= 1024) {
       }
 
       numDisplay.textContent = currentDisplay.padStart(3, "0");
-      currentDisplay = currentDisplay.slice(1) + (inputValue || "");
-      numDisplay.textContent = currentDisplay;
 
       const currentNumber = Number(currentDisplay);
       if (!isNaN(currentNumber) && currentNumber > maxValue) {
