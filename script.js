@@ -3,6 +3,8 @@ let minValue;
 let triesAllowed;
 let closeRange;
 
+const closeRangeDisplay = document.getElementById("js-close-range-display");
+
 window.addEventListener("load", () => {
   maxValue = parseInt(localStorage.getItem("maxValue")) || 100;
   minValue = parseInt(localStorage.getItem("minValue")) || 1;
@@ -11,6 +13,8 @@ window.addEventListener("load", () => {
 
   triesLeft = triesAllowed;
   leftTriesDisplay.textContent = triesLeft;
+
+  closeRangeDisplay.textContent = closeRange;
 
   const savedDifficulty = localStorage.getItem("selectedDifficulty") || "easy"; // Default to "easy"
   const savedRadio = document.querySelector(
@@ -97,7 +101,9 @@ difficultyRadios.forEach((radio) => {
         triesAllowed = 10;
         triesLeft = triesAllowed;
         leftTriesDisplay.textContent = triesLeft;
-        closeRange = 10;
+        closeRange = 30;
+        closeRangeDisplay.textContent = closeRange;
+
         break;
       case "medium":
         maxValue = 500;
@@ -105,7 +111,9 @@ difficultyRadios.forEach((radio) => {
         triesAllowed = 10;
         triesLeft = triesAllowed;
         leftTriesDisplay.textContent = triesLeft;
-        closeRange = 10;
+        closeRange = 15;
+        closeRangeDisplay.textContent = closeRange;
+
         break;
       case "easy":
         maxValue = 100;
@@ -118,6 +126,8 @@ difficultyRadios.forEach((radio) => {
       case "custom":
         customMenu.classList.remove("custom");
         customMenu.classList.add("active-custom");
+        closeRangeDisplay.textContent = closeRange;
+
         break;
     }
 
@@ -297,16 +307,17 @@ function checkResult(guessed, random) {
 
 // retry
 function reattemptSameNum(guessed, random) {
-  if (triesLeft > 0) {
+  if (triesLeft >= 1) {
     guessedNum = guessed;
     randomNum = random;
     triesLeft--;
     checkResult(guessedNum, randomNum);
     leftTriesDisplay.textContent = triesLeft;
     previousGuessDisplay.textContent = guessedNum;
-  } else if (triesLeft <= 0) {
+  } else {
     resultDisplay.textContent =
       pickRandomMessage(outOfAttemptsArray) + ` It was ${random}.`;
+    retryBtn.classList.add("hidden");
   }
 }
 
