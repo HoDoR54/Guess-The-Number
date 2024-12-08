@@ -345,6 +345,21 @@ resetBtn.addEventListener("click", () => {
   bestGuessDisplay.textContent = 0;
 });
 
+const mobileInput = () => {
+  const screenWidth = window.innerWidth;
+
+  if (screenWidth >= 768 && screenWidth <= 1024) {
+    numDisplay.addEventListener("touchstart", () => {
+      const input = document.createElement("input");
+      input.type = "text";
+      document.body.appendChild(input);
+      input.focus();
+    });
+  } else {
+    return;
+  }
+};
+
 // ------------------------result-arrays-----------------------
 
 const congratsArray = [

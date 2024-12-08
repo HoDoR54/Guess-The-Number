@@ -319,5 +319,6 @@ footer div {
   }
   * {
     font-size: calc(100% - 2px);
+    margin: calc(100% - 2px);
   }
 }
