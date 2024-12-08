@@ -359,10 +359,15 @@ if (screenWidth <= 1024) {
       let currentDisplay = numDisplay.textContent.trim();
       const inputValue = event.data;
 
-      if (inputValue && !/^\d$/.test(inputValue)) {
-        mobileNumInput.value = currentDisplay;
+      if (inputValue === null) {
+        currentDisplay = currentDisplay.slice(0, -1);
+      } else if (/^\d$/.test(inputValue)) {
+        currentDisplay = currentDisplay.slice(1) + inputValue;
+      } else {
         return;
       }
+
+      numDisplay.textContent = currentDisplay.padStart(3, "0");
       currentDisplay = currentDisplay.slice(1) + (inputValue || "");
       numDisplay.textContent = currentDisplay;
 
