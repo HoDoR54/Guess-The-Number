@@ -284,9 +284,13 @@ bestGuessDisplay.textContent =
 
 // check results
 function checkResult(guessed, random) {
+  previousGuessDisplay.textContent = guessed;
   if (guessed === random) {
     playerScore = triesAllowed - triesLeft;
     scoreDisplay.textContent = playerScore;
+    if (previousGuessDisplay.textContent != "00") {
+      previousGuessDisplay.textContent = '00';
+    }
     if (playerScore < bestGuess) {
       bestGuess = playerScore;
       localStorage.setItem("bestGuess", JSON.stringify(bestGuess));
@@ -313,11 +317,11 @@ function reattemptSameNum(guessed, random) {
     triesLeft--;
     checkResult(guessedNum, randomNum);
     leftTriesDisplay.textContent = triesLeft;
-    previousGuessDisplay.textContent = guessedNum;
   } else {
     resultDisplay.textContent =
       pickRandomMessage(outOfAttemptsArray) + ` It was ${random}.`;
     retryBtn.classList.add("hidden");
+    previousGuessDisplay.textContent = '00'
   }
 }
 
