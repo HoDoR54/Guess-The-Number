@@ -129,18 +129,21 @@ button {
 #about-game {
   background-color: var(--primary-light);
   color: var(--primary-dark);
-  padding: 25px 50px;
+  padding: 30px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
   box-shadow: 6px 6px 12px -3px rgba(0, 0, 0, 0.75);
-  max-width: 500px;
+  width: 300px;
 }
 [data-theme="light"] #about-game {
   background-color: var(--primary-dark);
   color: var(--primary-light);
+}
+#about-game h1 {
+  margin-bottom: 15px;
 }
 .fa-xmark {
   position: absolute;
@@ -213,6 +216,9 @@ footer div {
   box-shadow: 6px 6px 12px -3px rgba(0, 0, 0, 0.75);
   width: max-content;
   padding-right: 100px;
+}
+h1 {
+  font-size: 1.5rem;
 }
 [data-theme="light"] .settings {
   background-color: var(--primary-dark);
